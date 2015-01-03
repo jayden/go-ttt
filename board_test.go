@@ -5,7 +5,11 @@ import (
   "github.com/stretchr/testify/assert"
 )
 
+const blank = " "
+
 func TestMakeEmptyBoard(t *testing.T) {
-  t.Log("Returns a blank board.")
-  assert.Equal(t, MakeBoard(), make([]byte, 9))
+  board := MakeBoard()
+  spaces := board.spaces
+  expected := []string{blank, blank, blank, blank, blank, blank, blank, blank, blank}
+  assert.Equal(t, expected, spaces)
 }
