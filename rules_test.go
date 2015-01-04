@@ -36,21 +36,45 @@ func winBoard() *Board {
 }
 
 func altWinBoard() *Board {
-  winBoard := MakeBoard()
-  winBoard.Fill(3, "O")
-  winBoard.Fill(4, "O")
-  winBoard.Fill(5, "O")
-  return winBoard
+  altWinBoard := MakeBoard()
+  altWinBoard.Fill(3, "O")
+  altWinBoard.Fill(4, "O")
+  altWinBoard.Fill(5, "O")
+  return altWinBoard
+}
+
+func colWinBoard() *Board {
+  colWinBoard := MakeBoard()
+  colWinBoard.Fill(0, "X")
+  colWinBoard.Fill(3, "X")
+  colWinBoard.Fill(6, "X")
+  return colWinBoard
 }
 
 func TestWinGame(t *testing.T) {
   board := MakeBoard()
   t.Log("Empty board should not be a win")
   assert.False(t, board.GameWon())
+
   t.Log("Tie board should not be a win")
   assert.False(t, tieBoard().GameWon())
+
   t.Log("Three in a row results in a win")
   assert.True(t, winBoard().GameWon())
+
   t.Log("Three in a row results in a win (2)")
   assert.True(t, altWinBoard().GameWon())
+
+  t.Log("A column match is also a win")
+  assert.True(t, colWinBoard().GameWon())
+}
+
+func TestGetAvailableMoves(t *testing.T) {
+  emptyBoard := MakeBoard()
+  expected := []int{0, 1, 2, 3, 4, 5, 6, 7, 8}
+  t.Log("Empty board should return all spaces")
+  assert.Equal(t, expected, emptyBoard.GetAvailableMoves())
+
+  t.Log("Full board should return no spaces")
+  assert.Equal(t, []int{}, tieBoard().GetAvailableMoves())
 }
