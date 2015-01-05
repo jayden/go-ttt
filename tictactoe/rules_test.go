@@ -11,6 +11,8 @@ func TestDrawGame(t *testing.T) {
   assert.False(t, board.GameDraw())
   t.Log("Full board should result in a draw")
   assert.True(t, tieBoard().GameDraw())
+  t.Log("A full board with a winner should not result in a draw")
+  assert.False(t, fullWinBoard().GameDraw())
 }
 
 func tieBoard() *Board {
@@ -25,6 +27,12 @@ func tieBoard() *Board {
   tieBoard.Fill(7, "X")
   tieBoard.Fill(8, "O")
   return tieBoard
+}
+
+func fullWinBoard() *Board {
+  fullWinBoard := tieBoard()
+  fullWinBoard.Fill(2, "X")
+  return fullWinBoard
 }
 
 func winBoard() *Board {
@@ -49,6 +57,13 @@ func colWinBoard() *Board {
   colWinBoard.Fill(3, "X")
   colWinBoard.Fill(6, "X")
   return colWinBoard
+}
+
+func inProgressBoard() *Board {
+  inProgressBoard := MakeBoard()
+  inProgressBoard.Fill(0, "X")
+  inProgressBoard.Fill(4, "O")
+  return inProgressBoard
 }
 
 func TestWinGame(t *testing.T) {
@@ -77,4 +92,11 @@ func TestGetAvailableMoves(t *testing.T) {
 
   t.Log("Full board should return no spaces")
   assert.Equal(t, []int{}, tieBoard().GetAvailableMoves())
+
+  t.Log("A winning board should also return no spaces")
+  assert.Equal(t, []int{}, winBoard().GetAvailableMoves())
+
+  t.Log("An in-progress board should return available spaces")
+  expected = []int{1, 2, 3, 5, 6, 7, 8}
+  assert.Equal(t, expected, inProgressBoard().GetAvailableMoves())
 }

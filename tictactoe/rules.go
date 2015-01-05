@@ -1,7 +1,7 @@
 package tictactoe
 
 func (board *Board) GameDraw() bool {
-  if containsBlankSpace(board) {
+  if containsBlankSpace(board) || board.GameWon() {
     return false
   }
   return true
@@ -57,10 +57,16 @@ func winningCombos() [][]int {
 
 func (board *Board) GetAvailableMoves() []int {
   result := []int{}
-  if containsBlankSpace(board) {
+  if board.GameOver() {
+    return result
+  } else {
     for i,space := range board.spaces {
       if space == blank { result = append(result, i) }
     }
   }
     return result
+}
+
+func (board *Board) GameOver() bool {
+  return board.GameDraw() || board.GameWon()
 }
