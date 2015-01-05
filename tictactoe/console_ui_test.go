@@ -43,3 +43,13 @@ func TestPrintsOutput(t *testing.T) {
 
   assert.Equal(t, message, out)
 }
+
+func TestPrintsBoard(t *testing.T) {
+  t.Log("Prints blank board")
+  expected := "   |   |   \n-----------\n   |   |   \n-----------\n   |   |   "
+  assert.Equal(t, expected, BoardToString(MakeBoard()))
+
+  t.Log("Prints board with markers")
+  expected = " X | X | O \n-----------\n O | O | X \n-----------\n X | X | O "
+  assert.Equal(t, expected, BoardToString(tieBoard()))
+}
