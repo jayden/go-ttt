@@ -31,11 +31,11 @@ func BoardToString(board *Board) string {
 }
 
 func writeSeparator(index int) string {
-  if isLastColumn(index){ return writeHorizontalLine(index) }
+  if isLastSpaceInRow(index){ return writeHorizontalLine(index) }
   return spaceSeparator
 }
 
-func isLastColumn(index int) bool {
+func isLastSpaceInRow(index int) bool {
   i := float64(index+1)
   return math.Mod(i, 3) == 0
 }

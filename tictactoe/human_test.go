@@ -18,10 +18,11 @@ func TestManipulateHumanMark(t *testing.T) {
 
 func TestMakesMove(t *testing.T) {
   human := new(Human)
-  human.SetMarker("X")
+  mockMove := "1"
+  writeMockInput(mockMove)
   board := MakeBoard()
-  t.Log("makes a move on the board")
+
+  t.Log("captures user move selection")
   human.GetMove(board)
-  expected := []string{"X", blank, blank, blank, blank, blank, blank, blank, blank}
-  assert.Equal(t, expected, board.spaces)
+  assert.Equal(t, 1, human.move)
 }

@@ -15,7 +15,7 @@ func (human *Human) GetMarker() string {
   return human.marker
 }
 
-func (human *Human) GetMove(board *Board) {
+func (human *Human) GetMove(board *Board) int {
   human.move,_ = strconv.Atoi(GetInput())
-  board.Fill(human.move, human.marker)
+  return human.move
 }
