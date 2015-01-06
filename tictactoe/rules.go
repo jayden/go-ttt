@@ -1,7 +1,8 @@
 package tictactoe
 
 func (board *Board) GameDraw() bool {
-  if containsBlankSpace(board) || board.GameWon() {
+  _,gameWon := board.GameWon()
+  if containsBlankSpace(board) || gameWon {
     return false
   }
   return true
@@ -16,14 +17,14 @@ func containsBlankSpace(board *Board) bool {
   return false
 }
 
-func (board *Board) GameWon() bool {
+func (board *Board) GameWon() (string, bool) {
   for _,marker := range []string{"X", "O"} {
     for _,combo := range winningCombos() {
      set := markersInCombo(board, combo)
-     if comboHasWinner(set, marker) { return true }
+     if comboHasWinner(set, marker) { return marker, true }
    }
   }
-  return false
+  return "", false
 }
 
 func markersInCombo(board *Board, combo []int) []string {
@@ -68,5 +69,6 @@ func (board *Board) GetAvailableMoves() []int {
 }
 
 func (board *Board) GameOver() bool {
-  return board.GameDraw() || board.GameWon()
+  _, gameWon := board.GameWon()
+  return board.GameDraw() || gameWon
 }

@@ -3,5 +3,6 @@ package tictactoe
 type Player interface {
   GetMarker() string
   SetMarker(string)
-  GetMove(Board) int
+  GetMove(*Board) int
+  GetOpponentMarker() string
 }

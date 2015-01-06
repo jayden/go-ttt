@@ -5,6 +5,14 @@ import (
   "github.com/stretchr/testify/assert"
 )
 
+func TestHumanIsAPlayer(t *testing.T) {
+  human := new(Human)
+  var player Player = human
+
+  t.Log("Human implements the Player interface")
+  assert.Equal(t, human, player)
+}
+
 func TestManipulateHumanMark(t *testing.T) {
   human := new(Human)
   t.Log("gets and sets the marker of human player")
@@ -14,6 +22,9 @@ func TestManipulateHumanMark(t *testing.T) {
   t.Log("changes the marker of human player")
   human.SetMarker("O")
   assert.Equal(t, "O", human.GetMarker())
+
+  t.Log("human player's opponent marker should be its opposite")
+  assert.Equal(t, "X", human.GetOpponentMarker())
 }
 
 func TestMakesMove(t *testing.T) {

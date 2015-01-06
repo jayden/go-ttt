@@ -69,19 +69,27 @@ func inProgressBoard() *Board {
 func TestWinGame(t *testing.T) {
   board := MakeBoard()
   t.Log("Empty board should not be a win")
-  assert.False(t, board.GameWon())
+  _, gameWon := board.GameWon()
+  assert.False(t, gameWon)
 
   t.Log("Tie board should not be a win")
-  assert.False(t, tieBoard().GameWon())
+  _, gameWon = tieBoard().GameWon()
+  assert.False(t, gameWon)
 
   t.Log("Three in a row results in a win")
-  assert.True(t, winBoard().GameWon())
+  winner, gameWon := winBoard().GameWon()
+  assert.True(t, gameWon)
 
   t.Log("Three in a row results in a win (2)")
-  assert.True(t, altWinBoard().GameWon())
+  _, gameWon = altWinBoard().GameWon()
+  assert.True(t, gameWon)
 
   t.Log("A column match is also a win")
-  assert.True(t, colWinBoard().GameWon())
+  _, gameWon = colWinBoard().GameWon()
+  assert.True(t, gameWon)
+
+  t.Log("Gets winner of game")
+  assert.Equal(t, "X", winner)
 }
 
 func TestGetAvailableMoves(t *testing.T) {
