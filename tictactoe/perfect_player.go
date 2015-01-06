@@ -30,21 +30,23 @@ func (player *PerfectPlayer) GetMove(board *Board) int {
 }
 
 func (player *PerfectPlayer) minimax(board *Board, marker string, depth int) int {
+  if board.GameOver() {
+    return player.getEvaluatedScore(board, depth)
+  }
+
   availableMoves := board.GetAvailableMoves()
   fmt.Println(availableMoves)
   depth++
   scores, moves := []int{}, []int{}
-
-  if len(availableMoves) == 0 {
-    fmt.Println("EVALUATED SCORE: ", player.getEvaluatedScore(board, depth))
-    return player.getEvaluatedScore(board, depth)
-  }
+  scoresMap := make(map[int]int, len(board.spaces))
 
   for _,move := range availableMoves {
     board.Fill(move, marker)
     nextTurn := getNextTurn(marker)
-    scores = append(scores, player.minimax(board, nextTurn, depth))
+    recurScore := player.minimax(board, nextTurn, depth)
+    scores = append(scores, recurScore)
     moves = append(moves, move)
+    scoresMap[move] = recurScore
     board.ClearSpace(move)
     fmt.Println("SCORES: ", scores)
     fmt.Println("MOVES: ", moves)
@@ -52,14 +54,16 @@ func (player *PerfectPlayer) minimax(board *Board, marker string, depth int) int
 
   fmt.Println("SCORES: ", scores)
   fmt.Println("MOVES: ", moves)
+  fmt.Println("MAP: ", scoresMap)
 
   minScoreIndex, maxScoreIndex := getIndicesOfBestScores(scores)
-  if player.GetMarker() != marker {
+  if player.GetMarker() == marker {
     player.bestMove =  moves[maxScoreIndex]
+    return scores[maxScoreIndex]
   } else {
     player.bestMove =  moves[minScoreIndex]
+    return scores[minScoreIndex]
   }
-  return 0
 }
 
 func getNextTurn(marker string) string {

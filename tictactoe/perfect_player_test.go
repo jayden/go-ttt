@@ -28,11 +28,16 @@ func TestPerfectPlayerGetsBestMoves(t *testing.T) {
   perfectPlayer := new(PerfectPlayer)
   perfectPlayer.SetMarker("O")
 
-  //t.Log("PerfectPlayer should return winning move")
-  //assert.Equal(t, 2, perfectPlayer.GetMove(testBoard()))
+  t.Log("PerfectPlayer should return winning move")
+  assert.Equal(t, 2, perfectPlayer.GetMove(testBoard()))
 
   t.Log("PerfectPlayer should block winning move")
   assert.Equal(t, 8, perfectPlayer.GetMove(blockBoard()))
+
+  t.Log("PerfectPlayer should play center space")
+  firstMoveBoard := MakeBoard()
+  firstMoveBoard.Fill(0, "X")
+  assert.Equal(t, 4, perfectPlayer.GetMove(firstMoveBoard))
 }
 
 func blockBoard() *Board {
