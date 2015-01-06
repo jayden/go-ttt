@@ -1,10 +1,13 @@
 package tictactoe
 
+const (
+  blank = " "
+  defaultBoardSize = 9
+)
+
 type Board struct {
   spaces []string
 }
-
-const blank = " "
 
 func MakeBoard() *Board {
   board := new(Board)
@@ -13,25 +16,22 @@ func MakeBoard() *Board {
 }
 
 func initializeBoard(board *Board) {
-  board.spaces = make([]string, 9)
+  board.spaces = make([]string, defaultBoardSize)
   for i:= range board.spaces {
     board.spaces[i] = blank
   }
 }
 
-func (board *Board) Fill(position int, marker string) {
-  if validFillPosition(board, position) {
+func (board *Board) FillSpace(position int, marker string) {
+  if validPosition(board, position) {
     board.spaces[position] = marker
   }
 }
 
 func (board *Board) ClearSpace(position int) {
-  if validFillPosition(board, position) {
-    board.spaces[position] = blank
-  }
+  board.FillSpace(position, blank)
 }
 
-func validFillPosition(board *Board, position int) bool {
+func validPosition(board *Board, position int) bool {
   return position >= 0 && position < len(board.spaces)
 }
-

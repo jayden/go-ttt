@@ -17,52 +17,39 @@ func TestDrawGame(t *testing.T) {
 
 func tieBoard() *Board {
   tieBoard := MakeBoard()
-  tieBoard.Fill(0, "X")
-  tieBoard.Fill(1, "X")
-  tieBoard.Fill(2, "O")
-  tieBoard.Fill(3, "O")
-  tieBoard.Fill(4, "O")
-  tieBoard.Fill(5, "X")
-  tieBoard.Fill(6, "X")
-  tieBoard.Fill(7, "X")
-  tieBoard.Fill(8, "O")
+  FillSpaces(tieBoard, "X", 0, 1, 5, 6, 7)
+  FillSpaces(tieBoard, "O", 2, 3, 4, 8)
   return tieBoard
 }
 
 func fullWinBoard() *Board {
   fullWinBoard := tieBoard()
-  fullWinBoard.Fill(2, "X")
+  fullWinBoard.FillSpace(2, "X")
   return fullWinBoard
 }
 
 func winBoard() *Board {
   winBoard := MakeBoard()
-  winBoard.Fill(0, "X")
-  winBoard.Fill(1, "X")
-  winBoard.Fill(2, "X")
+  FillSpaces(winBoard, "X", 0, 1, 2)
   return winBoard
 }
 
 func altWinBoard() *Board {
   altWinBoard := MakeBoard()
-  altWinBoard.Fill(3, "O")
-  altWinBoard.Fill(4, "O")
-  altWinBoard.Fill(5, "O")
+  FillSpaces(altWinBoard, "O", 3, 4, 5)
   return altWinBoard
 }
 
 func colWinBoard() *Board {
   colWinBoard := MakeBoard()
-  colWinBoard.Fill(0, "X")
-  colWinBoard.Fill(3, "X")
-  colWinBoard.Fill(6, "X")
+  FillSpaces(colWinBoard, "X", 0, 3, 6)
   return colWinBoard
 }
 
 func inProgressBoard() *Board {
   inProgressBoard := MakeBoard()
-  inProgressBoard.Fill(0, "X")
-  inProgressBoard.Fill(4, "O")
+  inProgressBoard.FillSpace(0, "X")
+  inProgressBoard.FillSpace(4, "O")
   return inProgressBoard
 }
 

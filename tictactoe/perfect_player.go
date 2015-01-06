@@ -1,14 +1,13 @@
 package tictactoe
 
-import (
-  "fmt"
-  "sort"
+const (
+  initialDepth = 0
+  maxScore = 10
 )
 
 type PerfectPlayer struct {
   marker string
   move int
-  bestMove int
 }
 
 func (player *PerfectPlayer) GetMarker() string {
@@ -19,51 +18,48 @@ func (player *PerfectPlayer) SetMarker(marker string) {
   player.marker = marker
 }
 
-func (player *PerfectPlayer) GetOpponentMarker() string {
-  if player.marker == "X" { return "O" }
-  return "X"
-}
-
 func (player *PerfectPlayer) GetMove(board *Board) int {
-  player.minimax(board, player.marker, 0)
-  return player.bestMove
+  player.minimax(board, player.marker, initialDepth)
+  return player.move
 }
 
 func (player *PerfectPlayer) minimax(board *Board, marker string, depth int) int {
-  if board.GameOver() {
-    return player.getEvaluatedScore(board, depth)
-  }
+  if board.GameOver() { return player.getEvaluatedScore(board, depth) }
 
   availableMoves := board.GetAvailableMoves()
-  fmt.Println(availableMoves)
   depth++
-  scores, moves := []int{}, []int{}
-  scoresMap := make(map[int]int, len(board.spaces))
+  scores := make(map[int]int, len(availableMoves))
 
   for _,move := range availableMoves {
-    board.Fill(move, marker)
+    board.FillSpace(move, marker)
     nextTurn := getNextTurn(marker)
-    recurScore := player.minimax(board, nextTurn, depth)
-    scores = append(scores, recurScore)
-    moves = append(moves, move)
-    scoresMap[move] = recurScore
+    scores[move] = player.minimax(board, nextTurn, depth)
     board.ClearSpace(move)
-    fmt.Println("SCORES: ", scores)
-    fmt.Println("MOVES: ", moves)
   }
 
-  fmt.Println("SCORES: ", scores)
-  fmt.Println("MOVES: ", moves)
-  fmt.Println("MAP: ", scoresMap)
+  return player.getBestScoreForMarker(marker, scores)
+}
 
-  minScoreIndex, maxScoreIndex := getIndicesOfBestScores(scores)
+func (player *PerfectPlayer) getBestScoreForMarker(marker string, scores map[int]int) int {
+  var bestScore int
   if player.GetMarker() == marker {
-    player.bestMove =  moves[maxScoreIndex]
-    return scores[maxScoreIndex]
+    player.move, bestScore = getBestMove(scores, maxScore)
   } else {
-    player.bestMove =  moves[minScoreIndex]
-    return scores[minScoreIndex]
+    _,bestScore = getBestMove(scores, -maxScore)
   }
+  return bestScore
+}
+
+func getBestMove(scores map[int]int, targetScore int) (int, int) {
+  bestScore := targetScore * -1
+  var bestMove int
+  for k,v := range scores {
+    if (targetScore > 0 && v > bestScore) || (targetScore < 0 && v < bestScore) {
+      bestScore = v
+      bestMove = k
+    }
+  }
+  return bestMove, bestScore
 }
 
 func getNextTurn(marker string) string {
@@ -71,38 +67,14 @@ func getNextTurn(marker string) string {
   return "X"
 }
 
-func getIndicesOfBestScores(scores []int) (int, int) {
-  sortedScores := make([]int, len(scores))
-  copy(sortedScores[:], scores)
-  sort.Ints(sortedScores)
-  minScore, maxScore := 0, len(sortedScores) - 1
-  var minScoreIndex, maxScoreIndex int
-
-  for i, score := range scores {
-    if score == sortedScores[minScore] {
-      minScoreIndex = i
-    } else if score == sortedScores[maxScore] {
-      maxScoreIndex = i
-    }
-  }
-  fmt.Println("MINSCOREINDEX: ", minScoreIndex)
-  fmt.Println("MAXSCOREINDEX: ", maxScoreIndex)
-  return minScoreIndex, maxScoreIndex
-}
-
 func (player *PerfectPlayer) getEvaluatedScore(board *Board, depth int) int {
-  baseScore := len(board.spaces) + 1
-  fmt.Println("DEPTH FOR BOARD: ", board.spaces, depth)
   winner, gameWon := board.GameWon()
   if gameWon {
     if winner == player.marker {
-      fmt.Println("SCORE IF WINNER = COMP: ", baseScore - depth)
-      return baseScore - depth
+      return maxScore - depth
     } else {
-      fmt.Println("SCORE IF WINNER = HUMAN: ", depth - baseScore)
-      return depth - baseScore
+      return depth - maxScore
     }
-  } else {
-    return 0
   }
+  return 0
 }

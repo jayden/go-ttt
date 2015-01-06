@@ -22,9 +22,6 @@ func TestManipulateHumanMark(t *testing.T) {
   t.Log("changes the marker of human player")
   human.SetMarker("O")
   assert.Equal(t, "O", human.GetMarker())
-
-  t.Log("human player's opponent marker should be its opposite")
-  assert.Equal(t, "X", human.GetOpponentMarker())
 }
 
 func TestMakesMove(t *testing.T) {

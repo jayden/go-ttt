@@ -4,5 +4,4 @@ type Player interface {
   GetMarker() string
   SetMarker(string)
   GetMove(*Board) int
-  GetOpponentMarker() string
 }

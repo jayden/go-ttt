@@ -11,11 +11,6 @@ func (human *Human) SetMarker(marker string) {
   human.marker = marker
 }
 
-func (human *Human) GetOpponentMarker() string {
-  if human.marker == "X" { return "O" }
-  return "X"
-}
-
 func (human *Human) GetMarker() string {
   return human.marker
 }
