@@ -10,7 +10,7 @@ type PerfectPlayer struct {
   move int
 }
 
-func (player *PerfectPlayer) GetMarker() string {
+func (player *PerfectPlayer) Marker() string {
   return player.marker
 }
 
@@ -18,7 +18,7 @@ func (player *PerfectPlayer) SetMarker(marker string) {
   player.marker = marker
 }
 
-func (player *PerfectPlayer) GetMove(board *Board) int {
+func (player *PerfectPlayer) Move(board *Board) int {
   player.minimax(board, player.marker, initialDepth)
   return player.move
 }
@@ -42,7 +42,7 @@ func (player *PerfectPlayer) minimax(board *Board, marker string, depth int) int
 
 func (player *PerfectPlayer) getBestScoreForMarker(marker string, scores map[int]int) int {
   var bestScore int
-  if player.GetMarker() == marker {
+  if player.Marker() == marker {
     player.move, bestScore = getBestMove(scores, maxScore)
   } else {
     _,bestScore = getBestMove(scores, -maxScore)

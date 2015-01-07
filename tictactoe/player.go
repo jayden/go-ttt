@@ -1,7 +1,7 @@
 package tictactoe
 
 type Player interface {
-  GetMarker() string
+  Marker() string
   SetMarker(string)
-  GetMove(*Board) int
+  Move(*Board) int
 }

@@ -17,11 +17,11 @@ func TestManipulateHumanMark(t *testing.T) {
   human := new(Human)
   t.Log("gets and sets the marker of human player")
   human.SetMarker("X")
-  assert.Equal(t, "X", human.GetMarker())
+  assert.Equal(t, "X", human.Marker())
 
   t.Log("changes the marker of human player")
   human.SetMarker("O")
-  assert.Equal(t, "O", human.GetMarker())
+  assert.Equal(t, "O", human.Marker())
 }
 
 func TestMakesMove(t *testing.T) {
@@ -31,6 +31,6 @@ func TestMakesMove(t *testing.T) {
   board := MakeBoard()
 
   t.Log("captures user move selection")
-  human.GetMove(board)
+  human.Move(board)
   assert.Equal(t, 1, human.move)
 }

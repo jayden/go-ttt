@@ -11,11 +11,11 @@ func (human *Human) SetMarker(marker string) {
   human.marker = marker
 }
 
-func (human *Human) GetMarker() string {
+func (human *Human) Marker() string {
   return human.marker
 }
 
-func (human *Human) GetMove(board *Board) int {
+func (human *Human) Move(board *Board) int {
   human.move,_ = strconv.Atoi(GetInput())
   return human.move
 }
