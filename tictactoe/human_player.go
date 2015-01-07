@@ -1,7 +1,5 @@
 package tictactoe
 
-import "strconv"
-
 type Human struct {
   marker string
   move int
@@ -16,6 +14,6 @@ func (human *Human) Marker() string {
 }
 
 func (human *Human) Move(board *Board) int {
-  human.move,_ = strconv.Atoi(GetInput())
+  human.move = GetInput()
   return human.move
 }

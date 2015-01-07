@@ -5,14 +5,24 @@ import (
   "github.com/stretchr/testify/assert"
   "io"
   "os"
+  "strconv"
   "testing"
 )
+
+func TestConsoleIsAUI(t *testing.T) {
+  console := new(ConsoleUI)
+  var ui UI = console
+
+  t.Log("Console UI is a kind of UI")
+  assert.Equal(t, console, ui)
+}
 
 func TestGetInput(t *testing.T) {
   t.Log("gets input from console")
   mockInput := "1"
   writeMockInput(mockInput)
-  assert.Equal(t, mockInput, GetInput())
+  input,_ := strconv.Atoi(mockInput)
+  assert.Equal(t, input, GetInput())
 }
 
 func writeMockInput(input string) {

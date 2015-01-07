@@ -23,15 +23,13 @@ func initializeBoard(board *Board) {
 }
 
 func (board *Board) FillSpace(position int, marker string) {
-  if validPosition(board, position) {
-    board.spaces[position] = marker
-  }
+  board.spaces[position] = marker
 }
 
 func (board *Board) ClearSpace(position int) {
   board.FillSpace(position, blank)
 }
 
-func validPosition(board *Board, position int) bool {
-  return position >= 0 && position < len(board.spaces)
+func (board *Board) IsEmptySpace(position int) bool {
+  return board.spaces[position] == blank
 }

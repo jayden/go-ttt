@@ -20,7 +20,7 @@ func TestFillBoard(t *testing.T) {
   t.Log("can fill a board with a marker")
   assert.Equal(t, board.spaces[4], "X")
 }
-
+/*
 func TestFillIgnoresInvalidPositions(t *testing.T) {
   board := MakeBoard()
   copyBoard := make([]string, len(board.spaces))
@@ -29,7 +29,7 @@ func TestFillIgnoresInvalidPositions(t *testing.T) {
 
   t.Log("board should not be filled with an invalid position")
   assert.Equal(t, board.spaces, copyBoard)
-}
+}*/
 
 func TestClearSpace(t *testing.T) {
   board := MakeBoard()
