@@ -6,7 +6,7 @@ import (
 )
 
 func setupNewGame() *Game {
-	board := MakeBoard()
+	board := NewBoard()
 	players := []Player{new(MockPlayer), new(MockPlayer)}
 	ui := new(MockConsoleUI)
 	return NewGame(board, players, ui)
@@ -14,31 +14,29 @@ func setupNewGame() *Game {
 
 func TestGameInitializesNewBoard(t *testing.T) {
 	game := setupNewGame()
-	emptyBoard := MakeBoard()
+	emptyBoard := NewBoard()
 
 	t.Log("Game has an empty board")
-	assert.Equal(t, emptyBoard, game.Board())
+	assert.Equal(t, emptyBoard, game.board)
 }
 
 func TestGamePutsMarkerOnBoard(t *testing.T) {
-	board := MakeBoard()
+	board := NewBoard()
 	board.FillSpace(0, "X")
 	game := setupNewGame()
 
 	game.PutMove(0, "X")
 
 	t.Log("Game puts marker on the board")
-	assert.Equal(t, board, game.Board())
+	assert.Equal(t, board, game.board)
 }
 
 func TestGameRunner(t *testing.T) {
-	board := MakeBoard()
+	board := NewBoard()
 	player1, player2 := new(MockPlayer), new(MockPlayer)
 	players := []Player{player1, player2}
 	console := new(MockConsoleUI)
-	player1.SetMarker("X")
-	player2.SetMarker("O")
-	game := Game{board, players, console}
+	game := NewGame(board, players, console)
 
 	console.MakeFakeGameSelection(humanFirst)
 
@@ -47,7 +45,7 @@ func TestGameRunner(t *testing.T) {
 	FillSpaces(board, player2.Marker(), 1, 3, 4, 8)
 	player1.MakeFakeMove(6)
 	game.Run()
-	assert.Equal(t, board.spaces[6], player1.Marker())
+	assert.Equal(t, board.Spaces()[6], player1.Marker())
 
 	t.Log("Prints game conclusion at end of game")
 	assert.True(t, console.Called("PrintGameConclusion"))
@@ -71,7 +69,7 @@ func TestGameRunner(t *testing.T) {
 	FillSpaces(board, player2.Marker(), 1, 3, 4, 8)
 	player2.MakeFakeMove(6)
 	game.Run()
-	assert.Equal(t, board.spaces[6], player2.Marker())
+	assert.Equal(t, board.Spaces()[6], player2.Marker())
 
 	console.MakeFakeGameSelection(exit)
 	console.ResetCall()

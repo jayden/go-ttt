@@ -8,14 +8,14 @@ import (
 
 func TestFillSpaces(t *testing.T) {
 	t.Log("helper method #FillSpaces fills multiple spaces at once")
-	board := MakeBoard()
+	board := NewBoard()
 	FillSpaces(board, "X", 0, 1, 2)
 	expected := []string{"X", "X", "X", blank, blank, blank, blank, blank, blank}
 	assert.Equal(t, expected, board.spaces)
 }
 
 func TestClearBoard(t *testing.T) {
-	board := MakeBoard()
+	board := NewBoard()
 	FillSpaces(board, "X", 0, 1, 2)
 	expectedBefore := []string{"X", "X", "X", blank, blank, blank, blank, blank, blank}
 	expectedAfter := []string{blank, blank, blank, blank, blank, blank, blank, blank, blank}

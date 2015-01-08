@@ -23,7 +23,7 @@ func TestMockConsoleMakesFakeGameSelection(t *testing.T) {
 
 func TestMockConsoleMakesFakePlayerMove(t *testing.T) {
 	mockConsole := new(MockConsoleUI)
-	board := MakeBoard()
+	board := NewBoard()
 	mockConsole.MakeFakePlayerMove(1)
 
 	t.Log("Mock Console makes fake player move")
@@ -37,7 +37,7 @@ func TestMockConsoleKeepsTrackOfCalledFunctions(t *testing.T) {
 	t.Log("Mock Console records that #PromptGameMenu has been called")
 	assert.True(t, mockConsole.Called("PromptGameMenu"))
 
-	board := MakeBoard()
+	board := NewBoard()
 	mockConsole.AskForPlayerMove(board)
 
 	t.Log("Mock Console records that #AskForPlayerMove has been called")

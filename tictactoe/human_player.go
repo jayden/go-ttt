@@ -2,7 +2,6 @@ package tictactoe
 
 type Human struct {
 	marker  string
-	move    int
 	console UI
 }
 
@@ -21,6 +20,5 @@ func (human *Human) Marker() string {
 }
 
 func (human *Human) Move(board *Board) int {
-	human.move = human.console.AskForPlayerMove(board)
-	return human.move
+	return human.console.AskForPlayerMove(board)
 }

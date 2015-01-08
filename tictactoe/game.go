@@ -17,11 +17,13 @@ func NewGame(board *Board, players []Player, ui UI) *Game {
 	game.board = board
 	game.players = players
 	game.ui = ui
+	game.setPlayerMarkers()
 	return game
 }
 
-func (game *Game) Board() *Board {
-	return game.board
+func (game *Game) setPlayerMarkers() {
+	game.players[0].SetMarker("X")
+	game.players[1].SetMarker("O")
 }
 
 func (game *Game) PutMove(position int, marker string) {
@@ -42,12 +44,12 @@ func (game *Game) Run() {
 }
 
 func (game *Game) runGame() {
-	current, next := game.players[0], game.players[1]
-	for !game.board.GameOver() {
+	currentPlayer, nextPlayer := game.players[0], game.players[1]
+	for !GameOver(game.board) {
 		game.ui.PrintBoard(game.board)
-		move := current.Move(game.board)
-		game.PutMove(move, current.Marker())
-		current, next = next, current
+		move := currentPlayer.Move(game.board)
+		game.PutMove(move, currentPlayer.Marker())
+		currentPlayer, nextPlayer = nextPlayer, currentPlayer
 	}
 	game.ui.PrintBoard(game.board)
 	game.ui.PrintGameConclusion(game.board)

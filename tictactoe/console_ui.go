@@ -23,6 +23,10 @@ const (
 
 type ConsoleUI struct{}
 
+func NewConsoleUI() *ConsoleUI {
+	return new(ConsoleUI)
+}
+
 func (console ConsoleUI) PromptGameMenu() int {
 	PrintMessage(welcomeMessage)
 	validSelections := []int{1, 2, 3}
@@ -45,10 +49,10 @@ func (console ConsoleUI) PrintBoard(board *Board) {
 }
 
 func (console ConsoleUI) PrintGameConclusion(board *Board) {
-	if board.GameDraw() {
+	if GameDraw(board) {
 		PrintMessage(drawMessage)
 	} else {
-		winner, _ := board.GameWon()
+		winner, _ := GameWon(board)
 		winMessage := winner + " wins!\n"
 		PrintMessage(winMessage)
 	}
@@ -65,7 +69,7 @@ func (console ConsoleUI) AskForPlayerMove(board *Board) int {
 		input := GetInput()
 		if isNumber(input) {
 			move := convertInputToInt(input)
-			if isValidInput(move, board.GetAvailableMoves()) {
+			if isValidInput(move, GetAvailableMoves(board)) {
 				return move
 			}
 		}

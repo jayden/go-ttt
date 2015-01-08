@@ -28,9 +28,9 @@ func TestMakesMove(t *testing.T) {
 	human := NewHumanPlayer()
 	mockMove := "1"
 	writeMockInput(mockMove)
-	board := MakeBoard()
+	board := NewBoard()
 
 	t.Log("captures user move selection")
-	human.Move(board)
-	assert.Equal(t, 1, human.move)
+	move := human.Move(board)
+	assert.Equal(t, 1, move)
 }

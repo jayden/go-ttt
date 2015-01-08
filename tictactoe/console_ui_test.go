@@ -34,7 +34,7 @@ func TestPrintsOutput(t *testing.T) {
 func TestPrintsBoard(t *testing.T) {
 	t.Log("Prints blank board")
 	expected := "   |   |   \n-----------\n   |   |   \n-----------\n   |   |   "
-	assert.Equal(t, expected, BoardToString(MakeBoard()))
+	assert.Equal(t, expected, BoardToString(NewBoard()))
 
 	t.Log("Prints board with markers")
 	expected = " X | X | O \n-----------\n O | O | X \n-----------\n X | X | O "
@@ -45,7 +45,7 @@ func TestAskForPlayerMove(t *testing.T) {
 	console := new(ConsoleUI)
 	mockedInput := "1"
 	writeMockInput(mockedInput)
-	board := MakeBoard()
+	board := NewBoard()
 
 	move := console.AskForPlayerMove(board)
 

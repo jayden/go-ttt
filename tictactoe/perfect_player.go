@@ -29,11 +29,11 @@ func (player *PerfectPlayer) Move(board *Board) int {
 }
 
 func (player *PerfectPlayer) minimax(board *Board, marker string, depth int) int {
-	if board.GameOver() || depth == depthLimit {
+	if GameOver(board) || depth == depthLimit {
 		return player.getEvaluatedScore(board, depth)
 	}
 
-	availableMoves := board.GetAvailableMoves()
+	availableMoves := GetAvailableMoves(board)
 	depth++
 	scores := make(map[int]int, len(availableMoves))
 
@@ -77,7 +77,7 @@ func getNextTurn(marker string) string {
 }
 
 func (player *PerfectPlayer) getEvaluatedScore(board *Board, depth int) int {
-	winner, gameWon := board.GameWon()
+	winner, gameWon := GameWon(board)
 	if gameWon {
 		if winner == player.marker {
 			return maxScore - depth
