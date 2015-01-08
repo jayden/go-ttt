@@ -41,7 +41,7 @@ func (console ConsoleUI) PromptGameMenu() int {
 }
 
 func (console ConsoleUI) PrintBoard(board *Board) {
-	PrintMessage(BoardToString(board))
+	PrintMessage(BoardToString(board) + "\n")
 }
 
 func (console ConsoleUI) PrintGameConclusion(board *Board) {

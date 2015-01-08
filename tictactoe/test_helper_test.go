@@ -14,6 +14,18 @@ func TestFillSpaces(t *testing.T) {
 	assert.Equal(t, expected, board.spaces)
 }
 
+func TestClearBoard(t *testing.T) {
+	board := MakeBoard()
+	FillSpaces(board, "X", 0, 1, 2)
+	expectedBefore := []string{"X", "X", "X", blank, blank, blank, blank, blank, blank}
+	expectedAfter := []string{blank, blank, blank, blank, blank, blank, blank, blank, blank}
+
+	t.Log("helper method #ClearBoard clears the entire board")
+	assert.Equal(t, expectedBefore, board.spaces)
+	ClearBoard(board)
+	assert.Equal(t, expectedAfter, board.spaces)
+}
+
 func TestWriteMockOutput(t *testing.T) {
 	printFunction := func(s string) { fmt.Print(s) }
 	expected := "hello world!"

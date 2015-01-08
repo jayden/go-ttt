@@ -12,6 +12,14 @@ func FillSpaces(board *Board, mark string, spaces ...int) {
 	}
 }
 
+func ClearBoard(board *Board) {
+	for i, _ := range board.spaces {
+		if !board.IsEmptySpace(i) {
+			board.spaces[i] = blank
+		}
+	}
+}
+
 func writeMockInput(input string) {
 	reader, writer, _ := os.Pipe()
 	os.Stdin = reader
