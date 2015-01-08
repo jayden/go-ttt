@@ -45,6 +45,9 @@ func TestValidatesInput(t *testing.T) {
 	t.Log("returns false if it's not an integer")
 	assert.False(t, isValidInput("m"))
 
-	t.Log("returns true if it is a positive integer")
+	t.Log("returns true if it's a positive integer")
 	assert.True(t, isValidInput("1"))
+
+	t.Log("returns false if it's a negative integer")
+	assert.False(t, isValidInput("-1"))
 }

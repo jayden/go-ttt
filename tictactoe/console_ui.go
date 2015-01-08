@@ -9,11 +9,12 @@ import (
 )
 
 const (
-	askForMoveMessage = "Please select a move: "
-	drawMessage       = "It's a draw!\n"
-	horizontalLine    = "\n-----------\n"
-	spaceSeparator    = "|"
-	welcomeMessage    = "Let's Play Tic-Tac-Toe!\n"
+	askForMoveMessage  = "Please select a move: "
+	drawMessage        = "It's a draw!\n"
+	horizontalLine     = "\n-----------\n"
+	invalidMoveMessage = "Invalid move!\n"
+	spaceSeparator     = "|"
+	welcomeMessage     = "Let's Play Tic-Tac-Toe!\n"
 )
 
 type ConsoleUI struct{}
@@ -25,7 +26,7 @@ func (console ConsoleUI) PromptGameMenu() int {
 		"3. Exit Game\n\n" +
 		"Please select a game: "
 	PrintMessage(menu)
-	selection := convertInputToString(GetInput())
+	selection := convertInputToInt(GetInput())
 	return selection
 }
 
@@ -43,19 +44,25 @@ func (console ConsoleUI) PrintGameConclusion(board *Board) {
 	}
 }
 
-func convertInputToString(input string) int {
+func convertInputToInt(input string) int {
 	result, _ := strconv.Atoi(input)
 	return result
 }
 
 func (console ConsoleUI) AskForPlayerMove() int {
-	PrintMessage(askForMoveMessage)
-	move := convertInputToString(GetInput())
-	return move
+	for {
+		PrintMessage(askForMoveMessage)
+		input := GetInput()
+		if !isValidInput(input) {
+			PrintMessage(invalidMoveMessage)
+			continue
+		}
+		return convertInputToInt(input)
+	}
 }
 
 func isValidInput(input string) bool {
-	isMatch, _ := regexp.MatchString("^[1-9]$", input)
+	isMatch, _ := regexp.MatchString("^[0-9]$", input)
 	return isMatch
 }
 
