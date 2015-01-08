@@ -21,6 +21,6 @@ func (human *Human) Marker() string {
 }
 
 func (human *Human) Move(board *Board) int {
-	human.move = human.console.AskForPlayerMove()
+	human.move = human.console.AskForPlayerMove(board)
 	return human.move
 }
