@@ -15,19 +15,29 @@ const (
 	invalidMoveMessage = "Invalid move!\n"
 	spaceSeparator     = "|"
 	welcomeMessage     = "Let's Play Tic-Tac-Toe!\n"
+	gameMenu           = "1. Human vs. Computer\n" +
+		"2. Computer vs. Human\n" +
+		"3. Exit Game\n\n" +
+		"Please select a game: "
 )
 
 type ConsoleUI struct{}
 
 func (console ConsoleUI) PromptGameMenu() int {
 	PrintMessage(welcomeMessage)
-	menu := "1. Human vs. Computer\n" +
-		"2. Computer vs. Human\n" +
-		"3. Exit Game\n\n" +
-		"Please select a game: "
-	PrintMessage(menu)
-	selection := convertInputToInt(GetInput())
-	return selection
+	validSelections := []int{1, 2, 3}
+
+	for {
+		PrintMessage(gameMenu)
+		input := GetInput()
+		if isNumber(input) {
+			selection := convertInputToInt(input)
+			if isValidInput(selection, validSelections) {
+				return selection
+			}
+		}
+		continue
+	}
 }
 
 func (console ConsoleUI) PrintBoard(board *Board) {
@@ -49,19 +59,31 @@ func convertInputToInt(input string) int {
 	return result
 }
 
-func (console ConsoleUI) AskForPlayerMove() int {
+func (console ConsoleUI) AskForPlayerMove(board *Board) int {
 	for {
 		PrintMessage(askForMoveMessage)
 		input := GetInput()
-		if !isValidInput(input) {
-			PrintMessage(invalidMoveMessage)
-			continue
+		if isNumber(input) {
+			move := convertInputToInt(input)
+			if isValidInput(move, board.GetAvailableMoves()) {
+				return move
+			}
 		}
-		return convertInputToInt(input)
+		PrintMessage(invalidMoveMessage)
+		continue
 	}
 }
 
-func isValidInput(input string) bool {
+func isValidInput(input int, validInputs []int) bool {
+	for _, value := range validInputs {
+		if value == input {
+			return true
+		}
+	}
+	return false
+}
+
+func isNumber(input string) bool {
 	isMatch, _ := regexp.MatchString("^[0-9]$", input)
 	return isMatch
 }

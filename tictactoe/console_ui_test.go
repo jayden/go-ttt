@@ -41,13 +41,54 @@ func TestPrintsBoard(t *testing.T) {
 	assert.Equal(t, expected, BoardToString(tieBoard()))
 }
 
-func TestValidatesInput(t *testing.T) {
-	t.Log("returns false if it's not an integer")
-	assert.False(t, isValidInput("m"))
+func TestAskForPlayerMove(t *testing.T) {
+	console := new(ConsoleUI)
+	mockedInput := "1"
+	writeMockInput(mockedInput)
+	board := MakeBoard()
 
-	t.Log("returns true if it's a positive integer")
-	assert.True(t, isValidInput("1"))
+	move := console.AskForPlayerMove(board)
 
-	t.Log("returns false if it's a negative integer")
-	assert.False(t, isValidInput("-1"))
+	t.Log("should return move successfully on valid input")
+	assert.Equal(t, 1, move)
+}
+
+func TestPromptGameMenu(t *testing.T) {
+	console := new(ConsoleUI)
+	mockedInput := "1"
+	writeMockInput(mockedInput)
+	printMenu := func(s string) { PrintMessage(gameMenu) }
+	printWelcome := func(s string) { PrintMessage(welcomeMessage) }
+	outputMenu := writeMockOutput(gameMenu, printMenu)
+	outputWelcome := writeMockOutput(welcomeMessage, printWelcome)
+
+	selection := console.PromptGameMenu()
+
+	t.Log("it should print welcome message")
+	assert.Equal(t, welcomeMessage, outputWelcome)
+
+	t.Log("it should print menu")
+	assert.Equal(t, gameMenu, outputMenu)
+
+	t.Log("it returns the user selection on valid input")
+	assert.Equal(t, 1, selection)
+}
+
+func TestChecksIfInputIsNumber(t *testing.T) {
+	t.Log("returns false if it's not an number")
+	assert.False(t, isNumber("m"))
+
+	t.Log("returns true if it's a positive number")
+	assert.True(t, isNumber("1"))
+
+	t.Log("returns false if it's a negative number")
+	assert.False(t, isNumber("-1"))
+}
+
+func TestChecksIfInputIsValid(t *testing.T) {
+	t.Log("returns true if input is within list of valid inputs")
+	assert.True(t, isValidInput(1, []int{1, 2, 3}))
+
+	t.Log("returns false if input is not within list")
+	assert.False(t, isValidInput(2, []int{1, 3}))
 }
