@@ -15,5 +15,5 @@ How to Run Tests
 -----
 
 1. `cd tictactoe` within the root directory.
-2. `go get go get github.com/stretchr/testify`
+2. `go get github.com/stretchr/testify`
 3. `go test`
