@@ -1,8 +1,8 @@
 package tictactoe
 
 const (
-	X = "X"
-	O = "O"
+	x = "x"
+	o = "o"
 )
 
 func GameDraw(board *Board) bool {
@@ -23,7 +23,7 @@ func containsBlankSpace(board *Board) bool {
 }
 
 func GameWon(board *Board) (string, bool) {
-	for _, marker := range []string{"X", "O"} {
+	for _, marker := range []string{x, o} {
 		for _, combo := range winningCombos() {
 			set := markersInCombo(board, combo)
 			if comboHasWinner(set, marker) {

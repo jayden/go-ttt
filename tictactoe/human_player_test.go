@@ -16,12 +16,12 @@ func TestHumanIsAPlayer(t *testing.T) {
 func TestManipulateHumanMark(t *testing.T) {
 	human := NewHumanPlayer()
 	t.Log("gets and sets the marker of human player")
-	human.SetMarker("X")
-	assert.Equal(t, "X", human.Marker())
+	human.SetMarker(x)
+	assert.Equal(t, x, human.Marker())
 
 	t.Log("changes the marker of human player")
-	human.SetMarker("O")
-	assert.Equal(t, "O", human.Marker())
+	human.SetMarker(o)
+	assert.Equal(t, o, human.Marker())
 }
 
 func TestMakesMove(t *testing.T) {

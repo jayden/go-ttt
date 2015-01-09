@@ -33,11 +33,11 @@ func TestPrintsOutput(t *testing.T) {
 
 func TestPrintsBoard(t *testing.T) {
 	t.Log("Prints blank board")
-	expected := "   |   |   \n-----------\n   |   |   \n-----------\n   |   |   "
+	expected := " 0 | 1 | 2 \n-----------\n 3 | 4 | 5 \n-----------\n 6 | 7 | 8 "
 	assert.Equal(t, expected, BoardToString(NewBoard()))
 
 	t.Log("Prints board with markers")
-	expected = " X | X | O \n-----------\n O | O | X \n-----------\n X | X | O "
+	expected = " x | x | o \n-----------\n o | o | x \n-----------\n x | x | o "
 	assert.Equal(t, expected, BoardToString(tieBoard()))
 }
 

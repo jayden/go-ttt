@@ -15,7 +15,7 @@ func TestMakeBlankBoard(t *testing.T) {
 
 func TestSpaces(t *testing.T) {
 	board := NewBoard()
-	board.spaces[0] = "X"
+	board.spaces[0] = x
 
 	t.Log("return a copy of the board spaces")
 	assert.Equal(t, board.spaces, board.Spaces())
@@ -23,18 +23,18 @@ func TestSpaces(t *testing.T) {
 
 func TestFillBoard(t *testing.T) {
 	board := NewBoard()
-	board.FillSpace(4, "X")
+	board.FillSpace(4, x)
 
 	t.Log("can fill a board with a marker")
-	assert.Equal(t, board.spaces[4], "X")
+	assert.Equal(t, board.spaces[4], x)
 }
 
 func TestClearSpace(t *testing.T) {
 	board := NewBoard()
-	board.FillSpace(4, "X")
+	board.FillSpace(4, x)
 
 	t.Log("can clear a space on the board")
-	assert.Equal(t, board.spaces[4], "X")
+	assert.Equal(t, board.spaces[4], x)
 	board.ClearSpace(4)
-	assert.Equal(t, board.spaces[4], " ")
+	assert.Equal(t, board.spaces[4], blank)
 }

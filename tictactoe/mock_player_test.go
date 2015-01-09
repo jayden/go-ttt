@@ -15,10 +15,10 @@ func TestMockPlayerIsAPlayer(t *testing.T) {
 
 func TestMockPlayerManipulatesMarker(t *testing.T) {
 	mockPlayer := new(MockPlayer)
-	mockPlayer.SetMarker("X")
+	mockPlayer.SetMarker(x)
 
 	t.Log("Mock Player can get and set marker")
-	assert.Equal(t, "X", mockPlayer.Marker())
+	assert.Equal(t, x, mockPlayer.Marker())
 }
 
 func TestMockPlayerMakesFakeMoves(t *testing.T) {

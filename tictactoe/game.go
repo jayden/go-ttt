@@ -22,8 +22,8 @@ func NewGame(board *Board, players []Player, ui UI) *Game {
 }
 
 func (game *Game) setPlayerMarkers() {
-	game.players[0].SetMarker("X")
-	game.players[1].SetMarker("O")
+	game.players[0].SetMarker(x)
+	game.players[1].SetMarker(o)
 }
 
 func (game *Game) PutMove(position int, marker string) {

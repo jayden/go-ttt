@@ -60,20 +60,20 @@ func (player *PerfectPlayer) getBestScoreForMarker(marker string, scores map[int
 func getBestMove(scores map[int]int, targetScore int) (int, int) {
 	bestScore := targetScore * -1
 	var bestMove int
-	for k, v := range scores {
-		if (targetScore > 0 && v > bestScore) || (targetScore < 0 && v < bestScore) {
-			bestScore = v
-			bestMove = k
+	for move, score := range scores {
+		if (targetScore > 0 && score > bestScore) || (targetScore < 0 && score < bestScore) {
+			bestScore = score
+			bestMove = move
 		}
 	}
 	return bestMove, bestScore
 }
 
 func getNextTurn(marker string) string {
-	if marker == "X" {
-		return "O"
+	if marker == x {
+		return o
 	}
-	return "X"
+	return x
 }
 
 func (player *PerfectPlayer) getEvaluatedScore(board *Board, depth int) int {

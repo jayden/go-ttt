@@ -22,10 +22,10 @@ func TestGameInitializesNewBoard(t *testing.T) {
 
 func TestGamePutsMarkerOnBoard(t *testing.T) {
 	board := NewBoard()
-	board.FillSpace(0, "X")
+	board.FillSpace(0, x)
 	game := setupNewGame()
 
-	game.PutMove(0, "X")
+	game.PutMove(0, x)
 
 	t.Log("Game puts marker on the board")
 	assert.Equal(t, board, game.board)

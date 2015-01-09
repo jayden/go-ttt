@@ -44,8 +44,18 @@ func (console ConsoleUI) PromptGameMenu() int {
 	}
 }
 
+func PrintMessage(message string) {
+	fmt.Print(message)
+}
+
+func GetInput() string {
+	var input string
+	fmt.Scan(&input)
+	return input
+}
+
 func (console ConsoleUI) PrintBoard(board *Board) {
-	PrintMessage(BoardToString(board) + "\n")
+	PrintMessage("\n" + BoardToString(board) + "\n\n")
 }
 
 func (console ConsoleUI) PrintGameConclusion(board *Board) {
@@ -92,23 +102,20 @@ func isNumber(input string) bool {
 	return isMatch
 }
 
-func GetInput() string {
-	var input string
-	fmt.Scan(&input)
-	return input
-}
-
-func PrintMessage(message string) {
-	fmt.Print(message)
-}
-
 func BoardToString(board *Board) string {
 	var buffer bytes.Buffer
 	for i, mark := range board.spaces {
+		if mark == blank {
+			mark = blankSpaceToIndex(i)
+		}
 		buffer.WriteString(" " + mark + " ")
 		buffer.WriteString(writeSeparator(i))
 	}
 	return buffer.String()
+}
+
+func blankSpaceToIndex(index int) string {
+	return strconv.Itoa(index)
 }
 
 func writeSeparator(index int) string {
